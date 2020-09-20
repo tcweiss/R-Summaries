@@ -1,7 +1,7 @@
 ---
 title: "RMarkdown"
 author: "Thomas Weiss"
-date: "2/6/2020"
+date: "9/20/2020"
 output: 
   html_document:
     theme: lumen/dark/etc...
