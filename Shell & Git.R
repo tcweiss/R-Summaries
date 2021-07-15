@@ -2,8 +2,8 @@
 
 ###################################
 #
-# THIS SCRIPT INCLUDES USEFUL COMMANDS 
-# FOR UNIX SHELL AND GIT
+# THIS SCRIPT INCLUDES USEFUL COMMANDS F
+# OR UNIX SHELL AND GIT
 #
 ####################################
 
