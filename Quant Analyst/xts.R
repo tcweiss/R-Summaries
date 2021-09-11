@@ -271,3 +271,32 @@ to.hourly(x)
 
 
 
+##################
+##    Extras    ##
+##################
+
+# Get or change timezone of an xts object.
+
+tzone(x)
+tzone(x) <- "Europe/Zurich"
+
+
+# Get or change time format of index of an xts object.
+
+indexFormat(temps)
+indexFormat(temps) <- "%b-%d-%Y"
+
+
+# Count different time periods of an xts object.
+
+ndays(x)
+nweeks(x)
+nmonths(x)
+nyears(x)
+
+
+# Create an index of e.g. weekend days of an xts object. Sunday is = 0 and
+# Saturday is = 6.
+
+index <- which(.indexwday(x) == 0 | .indexwday(x) == 6)
+
