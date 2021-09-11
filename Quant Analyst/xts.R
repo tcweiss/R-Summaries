@@ -63,9 +63,8 @@ write.zoo(x, file = "x.csv", quote = FALSE, sep = ",")
 
 
 ######################################
-##      Filtering observations      ##
+##      Filtering Observations      ##
 ######################################
-
 
 # You can filter xts object with row indexing using brackets. The row index will
 # refer the the rownames (which are dates), and must be supplied in ISO
@@ -112,7 +111,7 @@ last(x, -11)
 
 
 ###############################
-##      Joining objects      ##
+##      Joining Objects      ##
 ###############################
 
 # You can use the classical join operations with xts object as well. However,
@@ -142,7 +141,7 @@ rbind(x, y)
 
 
 ##############################
-##      Missing values      ##
+##      Missing Values      ##
 ##############################
 
 # Merging can often results in NAs. One first option to deal with this is
@@ -203,5 +202,72 @@ lag(x, k = -2)
 # difference, or the difference of the difference).
 
 diff(x, lag = 1, differences = 1)
+
+
+###########################
+##    Apply Functions    ##
+###########################
+
+# Apply functions require some endpoints as one of the arguments. The
+# endpoints() function takes three arguments and returns  endpoints, i.e. the
+# indexes of the last rows in a specified interval. The first argument is an xts
+# objects, the second is the interval (like "minutes"/"hours"/"days" etc), and
+# the third is an integer for how many intervals should be skipped at a time.
+# The first endpoint is always zero, the last is always the last row (no matter
+# of the skipped periods to this point). For example, you can get the endpoints
+# of every second month from an object like this:
+
+endpoints(x, on = "months", k = 2)
+
+
+# Next, you can use the period.apply() function to compute a measure of each of
+# these intervals. It takes three arguments. The first is an xts object, the
+# second is a vector with endpoints, and the third is the function to be
+# applied. There are multiple shortcut versions of this as well, which will do
+# the endpoint step for you.
+
+period.apply(x, INDEX = endpoints, FUN = fun)
+
+apply.daily(x, FUN = fun)
+apply.weekly(x, FUN = fun)
+apply.monthly(x, FUN = fun)
+apply.quarterly(x, FUN = fun)
+apply.yearly(x, FUN = fun)
+
+
+# You can also use the base R apply functions. Rather than setting endpoints,
+# this first requires splitting your xts object into a list of intervals first.
+# This is done using the split.xts() function, which takes two arguments. This
+# first is your object, the second is the intervals by which to split.
+# Afterwards, you can use lapply to get the same result as before.
+
+y <- split.xts(x, f = "months", k = 3)
+
+lapply(y, fun)
+
+
+# Finally, rollapply() can be used to compute rolling measures over a time
+# window. You must provide three arguments. The first is your object, the second
+# is an integer for the time frame (i.e. 3 means three days for daily data but 3
+# months for monthly), and the third is the function to apply.
+
+rollapply(x, width = 3, FUN = fun)
+
+
+#############################
+##    OHLC Aggregations    ##
+#############################
+
+# You can compute Open-High-Low-Close aggregations by useing the to.period()
+# function. You must provide two arguments. The first is an xts object, the
+# second is the period interval to aggregate. Like before, there are shortcut
+# functions as well.
+
+to.period(x, period = "months")
+
+to.daily(x)
+to.hourly(x)
+...
+
 
 
