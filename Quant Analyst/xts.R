@@ -16,12 +16,12 @@
 # argument must be a matrix, second one a vector of date variables in ascending
 # order.
 
-xts(x, index)
+x <- xts(as.matrix(rnorm(20)), as.Date("2021-09-11") + 0:19)
 
 
 # Get the index (=rownames in form of dates) of an xts object. Only argument
 # must be an xts object.
-
+ 
 index(x)
 
 
@@ -35,7 +35,7 @@ coredata(x)
 # this will result in some garbage. For an example, run this function on the
 # 'austres' dataset that ships with R.
 
-as.xts(x)
+as.xts(austres)
 
 
 # Convert an xts object to a matrix again. Only argument must be an xts object.
@@ -180,5 +180,28 @@ na.omit(x)
 na.approx(x)
 
 
+##############################
+##    Lags & Differences    ##
+##############################
+
+# You can create lagging or leading values with the lag() function. It requires
+# two arguments. The first is an xts object, the second is an integer indicating
+# by how many rows the values should be shifted. Positive ones shift the values
+# down to create lags, i.e. each date will contain past values. Negative ones
+# shift them up to create leads, i.e. each date will contain future values.  The
+# indexes stay don't move.
+
+lag(x, k = 1)
+lag(x, k = -2)
+
+
+# The diff() function can be used to compute differences between values in
+# different rows. It takes three arguments. The first is an xts object, the
+# second is the number of lags to be used to compute the difference (e.g. lag =
+# 12 would subtract from every row the value from twelve rows in the past), and
+# the third is the order of differences (differences = 2 is the second-order
+# difference, or the difference of the difference).
+
+diff(x, lag = 1, differences = 1)
 
 
